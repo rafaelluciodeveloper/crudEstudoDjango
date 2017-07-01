@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>
+        {% block title %}
+
+        {% endblock%}
+    </title>
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper blue">
+        <a href="#" class="brand-logo left">Gerenciamento Usuarios</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'listar_usuario'%}">Listar Usuarios</a></li>
+            {% endif %}
+            {% if request.user.is_staff %}
+            <li><a href="{% url 'registrar_usuario'%}">Registrar Usuarios</a></li>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+                <li> Olá , {{ request.user.first_name }} {{request.user.last_name}}</li>
+                <li><a href="{% url 'deslogar' %}">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'logar' %}">Login</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    {% block content %}
+
+    {% endblock %}
+</div>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+  <script>
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+      {% if messages %}
+        {% for message in messages %}
+             $(document).ready(function() {
+                Materialize.toast('{{ message }}', 4000);
+            });
+        {% endfor %}
+    {% endif %}
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{% extends 'base_usuario.html' %}
+
+{% block title %}
+Listagem de Usuários
+{% endblock title %}
+
+{% block content %}
+<form method="get">
+    <input type="text" name="busca" placeholder="Buscar Usuário">
+    <button type="submit" class="btn btn-primary blue">Buscar</button>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Usuário</th>
+            <th>E-mail</th>
+            {% if request.user.is_superuser %}
+            <th>Ação</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+
+    {% for usuario in lista %}
+    <tr>
+        <td>{{ usuario.username }}</td>
+        <td>{{ usuario.email }}</td>
+        {% if request.user.is_superuser %}
+        <td>
+            <a href="{% url 'remover_usuario' pk=usuario.pk %}">
+                <i class="material-icons">delete</i>
+            </a>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% if request.user.is_staff %}
+<a href="{% url 'registrar_usuario' %}" class="btn btn-primary blue">Cadastrar</a>
+{% endif %}
+{% endblock content %}

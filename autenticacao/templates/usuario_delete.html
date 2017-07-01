@@ -1,0 +1,15 @@
+{% extends 'base_usuario.html' %}
+
+{% block title %}
+Remoção Usuário
+{% endblock title%}
+
+{% block content %}
+
+<form method="POST">{% csrf_token %}
+    <h4>Tem certeza que deseja excluir o Usuário '{{ usuario.username }}' ?</h4>
+    <br/>
+    <button type="submit" class="btn btn-primary red">Remover</button>
+</form>
+
+{% endblock content %}

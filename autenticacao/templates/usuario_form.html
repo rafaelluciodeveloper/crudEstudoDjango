@@ -1,0 +1,23 @@
+{% extends 'base_usuario.html' %}
+
+{% block title %}
+Cadastrar Usuário
+{% endblock title %}
+
+{% block content %}
+
+<form method="post">{%  csrf_token %}
+    <input type="text" name="username" placeholder="Usuário">
+    <input type="email" name="email" placeholder="E-mail">
+    <input type="password" name="password" placeholder="Senha">
+   <div class="input-field coll s12">
+       <select name="tipo_usuario" class="blue-text">
+           <option value="" disabled selected>Escolha uma Opção</option>
+           <option value="administrador" >Administrador</option>
+           <option value="usuario">Usuário</option>
+       </select>
+       <label>Tipo Usuário</label>
+   </div>
+    <button class="btn waves-effect waves-liht blue" type="submit" name="action">Salvar</button>
+</form>
+{% endblock content %}

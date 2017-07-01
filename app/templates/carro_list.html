@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Listagem de Carros
+{% endblock title %}
+
+{% block content %}
+<form method="get">
+    <input type="text" name="busca" placeholder="Buscar Veículo">
+    <button type="submit" class="btn btn-primary blue">Buscar</button>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Propietario</th>
+            <th>Modelo</th>
+            <th>Marca</th>
+            <th>Ano</th>
+            {% if request.user.is_superuser %}
+            <th>Ação</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+
+    {% for carro in lista %}
+    <tr>
+        <td>{{ carro.nome_propietario }}</td>
+        <td>{{ carro.modelo }}</td>
+        <td>{{ carro.marca }}</td>
+        <td>{{ carro.ano }}</td>
+        {% if request.user.is_superuser %}
+        <td>
+            <a href="{% url 'editar_carro' pk=carro.pk %}">
+                <i class="material-icons">
+                    mode_edit</i>
+            </a>
+            <a href="{% url 'remover_carro' pk=carro.pk %}">
+                <i class="material-icons">
+                    delete</i>
+            </a>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'cadastrar_carro' %}" class="btn btn-primary blue">Cadastrar</a>
+{% endblock content %}
